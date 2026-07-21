@@ -8,29 +8,23 @@ An automated, modular ETL (Extract, Transform, Load) pipeline implemented in Dat
 
 The master notebook orchestrates sequential steps using `dbutils.notebook.run()`. Each step receives file paths and configuration parameters dynamically via Databricks widgets.
 
-+---------------------+
-|  Input CSV Files    |
-+----------+----------+
-|
-v
-+----------+----------+
-|  1. Data Reading    | ---> Raw / Master Data CSV
-+----------+----------+
-|
-v
-+----------+----------+
-|  2. Data Cleaning   | ---> Cleaned Data CSV & Failed Records CSV
-+----------+----------+
-|
-v
-+----------+----------+
-|  3. Data Validation | ---> Passed Validation
-+----------+----------+
-|
-v
-+----------+----------+
-| 4. Data Transform   | ---> Transformed Data CSV & Hashed Data CSV
-+---------------------+
+### **Pipeline Execution Flow**
+
+1. **Input Stage:** Raw CSV files (`/Volumes/workspace/hdb/hdb-dataset/*.csv`)
+2. **Step 1 — Data Reading (`./hdb data reading`):**
+   * *In:* Input CSV Folder
+   * *Out:* Master Data File (`hdb_master_data.csv`)
+3. **Step 2 — Data Cleaning (`./hdb data cleaning`):**
+   * *In:* Master Data File
+   * *Out:* Cleaned Data File (`hdb_cleaned_data.csv`) & Failed Data File (`hdb_failed_data.csv`)
+4. **Step 3 — Data Validation (`./hdb data validation`):**
+   * *In:* Cleaned Data File
+   * *Out:* Validated Dataset
+5. **Step 4 — Data Transformation (`./hdb data transformation`):**
+   * *In:* Cleaned Data File
+   * *Out:* Transformed Data File (`hdb_transformed_data.csv`) & Hashed Data File (`hdb_hashed_data.csv`)
+
+---
 
 
 ---
