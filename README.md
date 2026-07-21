@@ -80,6 +80,46 @@ The pipeline triggers the following modular child notebooks in order:
 3. Click **Run All** or execute the code cell.
 
 ---
+---
+
+## 💾 Databricks Volume Storage Structure
+
+Data is stored using Unity Catalog Volumes under the `/Volumes/workspace/hdb/` directory path. This provides POSIX-compliant file paths for seamless reading and writing via standard Python tools (`pandas`, `glob`, `os`) and Spark.
+
+### **Directory & File Hierarchy**
+
+```text
+/Volumes/workspace/hdb/
+├── hdb-dataset/                     <-- INPUT VOLUME (Raw Data Files)
+│   ├── ResaleFlatPricesBasedonApprovalDate19901999.csv
+│   ├── ResaleFlatPricesBasedonApprovalDate2000Feb2012.csv
+│   ├── ResaleFlatPricesBasedonRegistrationDateFromMar2012toDec2014.csv
+│   ├── ResaleFlatPricesBasedonRegistrationDateFromJan2015toDec2016.csv
+│   └── ResaleFlatPricesBasedonRegistrationDateFromJan2017onwards.csv
+│
+└── hdb-output-data/                 <-- OUTPUT VOLUME (ETL Artifacts)
+    ├── hdb_master_data.csv          # Consolidated raw dataset from all source CSVs
+    ├── hdb_cleaned_data.csv         # Cleaned and standardized dataset
+    ├── hdb_failed_data.csv          # Isolated rejected/invalid records
+    ├── hdb_transformed_data.csv     # Transformed dataset ready for analytics
+    └── hdb_hashed_data.csv          # Anonymized/hashed dataset
+
+
+## 🛠️ Infrastructure Setup (Databricks Volumes)
+
+Before running the ETL pipeline, ensure the Unity Catalog volumes are created using the following SQL commands:
+
+```sql
+-- Step 1: Ensure catalog and schema exist
+CREATE CATALOG IF NOT EXISTS workspace;
+CREATE SCHEMA IF NOT EXISTS workspace.hdb;
+
+-- Step 2: Create Volume for raw input dataset CSV files
+CREATE VOLUME IF NOT EXISTS workspace.hdb.`hdb-dataset`;
+
+-- Step 3: Create Volume for output datasets and processed artifacts
+CREATE VOLUME IF NOT EXISTS workspace.hdb.`hdb-output-data`;
+
 
 ## Notes
 
