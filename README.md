@@ -104,6 +104,7 @@ Data is stored using Unity Catalog Volumes under the `/Volumes/workspace/hdb/` d
     ├── hdb_transformed_data.csv     # Transformed dataset ready for analytics
     └── hdb_hashed_data.csv          # Anonymized/hashed dataset
 
+---
 
 ## 🛠️ Infrastructure Setup (Databricks Volumes)
 
@@ -119,6 +120,7 @@ CREATE VOLUME IF NOT EXISTS workspace.hdb.`hdb-dataset`;
 
 -- Step 3: Create Volume for output datasets and processed artifacts
 CREATE VOLUME IF NOT EXISTS workspace.hdb.`hdb-output-data`;
+
 
 
 ## Notes
