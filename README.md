@@ -72,13 +72,13 @@ The pipeline triggers the following modular child notebooks in order:
 
 ---
 
-## ⚠️ Notes & Tips
+## Notes
 
 * **Data Profiling (`./hdb data profiling`):**
-   * *Purpose:* Ingests raw CSV files from the input volume and writes/consolidates them into master data storage.
+   * *Purpose:* Analyzes the master data file to generate descriptive statistics, null value checks, and column profile metrics before cleaning. Detects anomalies in HDB resale flat prices using Grouped Interquartile Range (IQR).
    * *In:* Master Data File
    * *Out:* Data distributions, column summaries, and schema health reports
-   * *Parameters:* `input_folder`, `master_data_file`
-
+   * *Parameters:* `master_data_file`
+ 
 
 * **Exception Handling Note:** `dbutils.notebook.exit()` raises a system exception under the hood in Python. If wrapped inside a generic `try...except Exception` block, catching `Exception` will intercept `exit()`. To prevent success messages from triggering the `except` block, ensure you catch specific exceptions (e.g., `Py4JJavaError`) or handle the exit logic outside the generic `try...except`.
